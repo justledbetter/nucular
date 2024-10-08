@@ -1,6 +1,8 @@
 package nucular
 
 import (
+	"image"
+
 	"github.com/aarzilli/nucular/font"
 	"github.com/aarzilli/nucular/rect"
 	nstyle "github.com/aarzilli/nucular/style"
@@ -26,6 +28,8 @@ func (s *ScalableSplit) Horizontal(w *Window, bounds rect.Rect) (bounds0, bounds
 	rszbounds, out := w.Custom(nstyle.WidgetStateInactive)
 
 	out.Cursor(rszbounds, font.HorizontalResizeCursor)
+
+	out.StrokeLine(image.Point{rszbounds.X, rszbounds.Y}, image.Point{rszbounds.X + rszbounds.W, rszbounds.Y}, int(scaling), w.Master().Style().Button.BorderColor)
 
 	if w.Input().Mouse.IsClickDownInRect(mouse.ButtonLeft, rszbounds, true) {
 		s.resize = true
@@ -104,6 +108,8 @@ func (s *ScalableSplit) Vertical(w *Window, bounds rect.Rect) (bounds0, bounds1 
 	rszbounds, out := w.Custom(nstyle.WidgetStateInactive)
 
 	out.Cursor(rszbounds, font.VerticalResizeCursor)
+
+	out.StrokeLine(image.Point{rszbounds.X, rszbounds.Y}, image.Point{rszbounds.X, rszbounds.Y + rszbounds.H}, int(scaling), w.Master().Style().Button.BorderColor)
 
 	if w.Input().Mouse.IsClickDownInRect(mouse.ButtonLeft, rszbounds, true) {
 		s.resize = true
